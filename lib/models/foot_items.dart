@@ -1,5 +1,5 @@
 class FoodItem {
-  String name;
-  double price;
+  final String name;
+  final double price;
   FoodItem({required this.name, required this.price});
 }
