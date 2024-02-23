@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "738391010072",
+    "project_id": "tokri-sem-three",
+    "storage_bucket": "tokri-sem-three.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738391010072:android:0686047ee9f624d4ca0c6d",
+        "android_client_info": {
+          "package_name": "com.example.tokri_sem_three"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi7VzBpkTxNp63_vRh23y1oXBKebHXp88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
