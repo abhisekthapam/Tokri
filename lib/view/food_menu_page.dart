@@ -288,7 +288,7 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
                   );
                 }
                     : null,
-                icon: Icon(Icons.shopping_cart),
+                icon: Icon(Icons.attach_money),
                 label: Text('Checkout'),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
