@@ -1,34 +1,34 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:tokri_sem_three/main.dart';
+import 'package:tokri_sem_three/view/signup_page.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('SignupPage UI Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MaterialApp(
+      home: SignupPage(),
+    ));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Create an Tokri Account'), findsOneWidget);
+    expect(find.text('First Name'), findsOneWidget);
+    expect(find.text('Last Name'), findsOneWidget);
+    expect(find.text('Address'), findsOneWidget);
+    expect(find.text('Email'), findsOneWidget);
+    expect(find.text('Phone Number'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
+    expect(find.text('Signup'), findsOneWidget);
+    expect(find.text('Already have an account?'), findsOneWidget);
+    expect(find.text('Login'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.enterText(find.byType(TextField).at(0), 'John');
+    await tester.enterText(find.byType(TextField).at(1), 'Doe');
+    await tester.enterText(find.byType(TextField).at(2), '123 Main St');
+    await tester.enterText(find.byType(TextField).at(3), 'john@example.com');
+    await tester.enterText(find.byType(TextField).at(4), '1234567890');
+    await tester.enterText(find.byType(TextField).at(5), 'password');
+
+    await tester.tap(find.text('Signup'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
-}
-
-class MyApp {
-  const MyApp();
 }
