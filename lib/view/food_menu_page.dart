@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/foot_items.dart';
 import '../view_models/food_menu_view_model.dart';
+import '../view_models/order_service.dart'; // Import the OrderService
+import 'checkout_page.dart';
 import 'order_page.dart';
 
 class FoodMenuPage extends StatefulWidget {
@@ -11,6 +13,7 @@ class FoodMenuPage extends StatefulWidget {
 class _FoodMenuPageState extends State<FoodMenuPage> {
   final FoodMenuViewModel viewModel = FoodMenuViewModel();
   Map<FoodItem, int> orderedItems = {};
+  final OrderService orderService = OrderService(); // Instantiate OrderService
 
   @override
   void initState() {
@@ -46,6 +49,21 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
       totalPrice += item.price * quantity;
     });
     return totalPrice;
+  }
+
+  void placeOrder(BuildContext context) async {
+    final totalPrice = calculateTotalPrice();
+    await orderService.saveOrder(orderedItems, totalPrice); // Call saveOrder method
+    setState(() {
+      orderedItems.clear();
+    });
+    Navigator.pop(context); // Close the dialog
+    Navigator.push( // Navigate to checkout_page.dart
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutPage(),
+      ),
+    );
   }
 
   @override
@@ -103,16 +121,12 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
                 icon: Icon(Icons.shopping_cart),
                 label: Text('View Order (${orderedItems.length})'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  onPrimary: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 ),
               ),
               ElevatedButton.icon(
                 onPressed: orderedItems.isNotEmpty ? () async {
-                  final totalPrice = calculateTotalPrice();
-                  await viewModel.checkout(orderedItems, totalPrice);
                   showDialog(
                     context: context,
                     builder: (context) => Dialog(
@@ -135,7 +149,7 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
                             ),
                             SizedBox(height: 16),
                             Text(
-                              'Total Price: \$${totalPrice.toStringAsFixed(2)}',
+                              'Total Price: \$${calculateTotalPrice().toStringAsFixed(2)}',
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -169,12 +183,7 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
                                 ),
                                 SizedBox(width: 16),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      orderedItems.clear();
-                                    });
-                                    Navigator.pop(context);
-                                  },
+                                  onPressed: () => placeOrder(context), // Call placeOrder method
                                   child: Text(
                                     'Order',
                                     style: TextStyle(
@@ -182,8 +191,6 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.red,
-                                    onPrimary: Colors.white,
                                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
@@ -201,8 +208,6 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
                 icon: Icon(Icons.shopping_cart),
                 label: Text('Checkout'),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                  onPrimary: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 ),

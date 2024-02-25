@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBJsWRFdqnB-iRIMtN0RZYy1Bv3l24Jejc',
-    appId: '1:738391010072:web:4bf60e332c34b166ca0c6d',
-    messagingSenderId: '738391010072',
-    projectId: 'tokri-sem-three',
-    authDomain: 'tokri-sem-three.firebaseapp.com',
-    storageBucket: 'tokri-sem-three.appspot.com',
-    measurementId: 'G-9932YS8S7F',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDi7VzBpkTxNp63_vRh23y1oXBKebHXp88',
-    appId: '1:738391010072:android:0686047ee9f624d4ca0c6d',
-    messagingSenderId: '738391010072',
-    projectId: 'tokri-sem-three',
-    storageBucket: 'tokri-sem-three.appspot.com',
+    apiKey: 'AIzaSyCeJCOO8tlgxFNW6QYvk4wYrXIPXEU-o0s',
+    appId: '1:413789515159:android:d2634e4d6212c38d5fe8d2',
+    messagingSenderId: '413789515159',
+    projectId: 'iamgodtokri',
+    storageBucket: 'iamgodtokri.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD0iY45o9j0eQAvBwtkuYEzkr1d6fXREQ0',
-    appId: '1:738391010072:ios:89d3d0c4c8533625ca0c6d',
-    messagingSenderId: '738391010072',
-    projectId: 'tokri-sem-three',
-    storageBucket: 'tokri-sem-three.appspot.com',
+    apiKey: 'AIzaSyB1X7WGALEE0eKYNAZckZdcfBN6C6LRoLo',
+    appId: '1:413789515159:ios:58bc81e8104665075fe8d2',
+    messagingSenderId: '413789515159',
+    projectId: 'iamgodtokri',
+    storageBucket: 'iamgodtokri.appspot.com',
     iosBundleId: 'com.example.tokriSemThree',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD0iY45o9j0eQAvBwtkuYEzkr1d6fXREQ0',
-    appId: '1:738391010072:ios:9f04b014eaa28761ca0c6d',
-    messagingSenderId: '738391010072',
-    projectId: 'tokri-sem-three',
-    storageBucket: 'tokri-sem-three.appspot.com',
-    iosBundleId: 'com.example.tokriSemThree.RunnerTests',
   );
 }
