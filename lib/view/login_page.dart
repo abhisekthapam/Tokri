@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../view_models/login_view_model.dart';
 import 'food_menu_page.dart';
 import 'signup_page.dart';
+import 'admin_page.dart'; // Import the admin page
 
 class LoginPage extends StatefulWidget {
   @override
@@ -61,22 +62,49 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: !_showPassword,
             ),
             SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () async {
-                bool userExists = await _loginViewModel.checkUserExists(_emailController.text);
-                if (userExists) {
-                  bool loginSuccess = await _loginViewModel.login(_emailController.text, _passwordController.text);
-                  if (loginSuccess) {
+            Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  String email = _emailController.text;
+                  String password = _passwordController.text;
+
+                  if (email == "admin" && password == "admin") {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => FoodMenuPage()),
+                      MaterialPageRoute(builder: (context) => AdminPage()),
                     );
+                    return;
+                  }
+
+                  bool userExists = await _loginViewModel.checkUserExists(email);
+                  if (userExists) {
+                    bool loginSuccess = await _loginViewModel.login(email, password);
+                    if (loginSuccess) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => FoodMenuPage()),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Login Failed'),
+                          content: Text('Invalid email or password. Please try again.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   } else {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: Text('Login Failed'),
-                        content: Text('Invalid email or password. Please try again.'),
+                        content: Text('User not found. Please sign up.'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
@@ -86,23 +114,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     );
                   }
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text('Login Failed'),
-                      content: Text('User not found. Please sign up.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-              child: Text('Login'),
+                },
+                child: Text('Login'),
+              ),
             ),
             SizedBox(height: 10.0),
             TextButton(
