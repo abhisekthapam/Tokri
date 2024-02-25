@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'food_menu_page.dart';
+import 'login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,10 +12,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 5), () {
-      // After 5 seconds, navigate to the main page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => FoodMenuPage()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     });
   }
@@ -28,13 +26,15 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Your splash screen content here
             Text(
               'Welcome to Tokri!',
-              style: TextStyle(fontSize: 24),
+              style: TextStyle(
+                fontSize: 24,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
             SizedBox(height: 20),
-            CircularProgressIndicator(), // Loading indicator
+            CircularProgressIndicator(),
           ],
         ),
       ),
