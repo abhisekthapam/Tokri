@@ -18,6 +18,8 @@ class _SignupPageState extends State<SignupPage> {
 
   bool _passwordVisible = false;
 
+  String _errorMessage = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,29 +100,48 @@ class _SignupPageState extends State<SignupPage> {
                       Center(
                         child: ElevatedButton(
                           onPressed: () async {
-                            // Create a map with signup data
-                            Map<String, dynamic> signupData = {
-                              'firstName': _firstNameController.text,
-                              'lastName': _lastNameController.text,
-                              'address': _addressController.text,
-                              'email': _emailController.text,
-                              'phoneNumber': _phoneNumberController.text,
-                              'password': _passwordController.text,
-                            };
+                            // Check if any field is empty
+                            if (_firstNameController.text.isEmpty ||
+                                _lastNameController.text.isEmpty ||
+                                _addressController.text.isEmpty ||
+                                _emailController.text.isEmpty ||
+                                _phoneNumberController.text.isEmpty ||
+                                _passwordController.text.isEmpty) {
+                              setState(() {
+                                _errorMessage = 'All fields are required';
+                              });
+                            } else {
+                              // Create a map with signup data
+                              Map<String, dynamic> signupData = {
+                                'firstName': _firstNameController.text,
+                                'lastName': _lastNameController.text,
+                                'address': _addressController.text,
+                                'email': _emailController.text,
+                                'phoneNumber': _phoneNumberController.text,
+                                'password': _passwordController.text,
+                              };
 
-                            await _signupViewModel.signup(signupData);
-                            _firstNameController.clear();
-                            _lastNameController.clear();
-                            _addressController.clear();
-                            _emailController.clear();
-                            _phoneNumberController.clear();
-                            _passwordController.clear();
-                            Navigator.pop(context);
+                              await _signupViewModel.signup(signupData);
+                              _firstNameController.clear();
+                              _lastNameController.clear();
+                              _addressController.clear();
+                              _emailController.clear();
+                              _phoneNumberController.clear();
+                              _passwordController.clear();
+                              Navigator.pop(context);
+                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.0),
                             child: Text('Signup'),
                           ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        _errorMessage,
+                        style: TextStyle(
+                          color: Colors.red,
                         ),
                       ),
                       SizedBox(height: 10),
