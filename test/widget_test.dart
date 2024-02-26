@@ -4,7 +4,6 @@ import 'package:tokri_sem_three/view/signup_page.dart';
 
 void main() {
   testWidgets('SignupPage UI Test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
     await tester.pumpWidget(MaterialApp(
       home: SignupPage(),
     ));
@@ -20,12 +19,12 @@ void main() {
     expect(find.text('Already have an account?'), findsOneWidget);
     expect(find.text('Login'), findsOneWidget);
 
-    await tester.enterText(find.byType(TextField).at(0), 'John');
-    await tester.enterText(find.byType(TextField).at(1), 'Doe');
-    await tester.enterText(find.byType(TextField).at(2), '123 Main St');
-    await tester.enterText(find.byType(TextField).at(3), 'john@example.com');
+    await tester.enterText(find.byType(TextField).at(0), 'Abhisek');
+    await tester.enterText(find.byType(TextField).at(1), 'Thapa');
+    await tester.enterText(find.byType(TextField).at(2), 'Kerabari');
+    await tester.enterText(find.byType(TextField).at(3), 'abhi@example.com');
     await tester.enterText(find.byType(TextField).at(4), '1234567890');
-    await tester.enterText(find.byType(TextField).at(5), 'password');
+    await tester.enterText(find.byType(TextField).at(5), 'abhisek');
 
     await tester.tap(find.text('Signup'));
     await tester.pump();
